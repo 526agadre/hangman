@@ -142,3 +142,45 @@ function updateCorrectGuess(guessedLetter){
 function endGame(won) {
   alert (`You guessed the word correct ${selectedWord}`), 1000
 }
+function updateCorrectGuess(guessedLetter) {
+  let newDisplayedWord = '';
+
+  for (let i = 0; i < selectedWord.length; i++) {
+    if (selectedWord[i] === guessedLetter) {
+      newDisplayedWord += guessedLetter; 
+      newDisplayedWord += displayedWord[i]; 
+    }
+  }
+
+  displayedWord = newDisplayedWord;
+  updateUI();
+  document.getElementById('correctSound').play();
+  if (!displayedWord.includes('_')) {
+    endGame(true);
+  }
+}
+function updateWrongGuess(guessedLetter) { 
+  wrongGuesses++;
+  document.getElementById('wrongLetters').textContent += `${guessedLetter} `;
+  document.getElementById('wrongSound').play();
+
+  if (wrongGuesses === maxMistakes) {
+    endGame(false);
+  }
+}
+function restartGame() {
+  document.getElementById('gameArea').classList.add('d-none');
+  document.getElementById('gameArea').classList.remove('d-block');
+
+  document.getElementById('difficultyBox').classList.add('d-none');
+  document.getElementById('difficultyBox').classList.remove('d-block');
+
+  document.getElementById('difficultySelection').classList.remove('d-none');
+  document.getElementById('wordDisplay').textContent = '_ _ _ _ _';
+  document.getElementById('wrongLetters').textContent = 'Wrong Guesses: ';
+  selectedWord = '';
+  displayedWord = '';
+  wrongGuesses = 0;
+  guessedLetters = [];
+  document.getElementById('shamrock').src = 'img/image6.jpg'; 
+}
