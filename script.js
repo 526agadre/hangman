@@ -88,7 +88,7 @@ function guessLetter () {
   
 
   //Check if letter was already guessed
-  if(guessedLetters.includes(guessLetter)){
+  if(guessedLetters.includes(guessedLetter)){
     alert(`You already guessed '${guessedLetter}'. Try a different letter!`)
     inputField.value = '' // Clear input field
     return
@@ -141,14 +141,17 @@ function updateCorrectGuess(guessedLetter){
 }
 function endGame(won) {
   alert (`You guessed the word correct ${selectedWord}`), 1000
+  restartGame()
+  return
 }
 function updateCorrectGuess(guessedLetter) {
   let newDisplayedWord = '';
 
   for (let i = 0; i < selectedWord.length; i++) {
     if (selectedWord[i] === guessedLetter) {
-      newDisplayedWord += guessedLetter; 
-      newDisplayedWord += displayedWord[i]; 
+      newDisplayedWord += guessedLetter; // Replace underscore with correct letter
+    } else {
+      newDisplayedWord += displayedWord[i]; // Keep already guessed letters
     }
   }
 
@@ -163,7 +166,7 @@ function updateWrongGuess(guessedLetter) {
   wrongGuesses++;
   document.getElementById('wrongLetters').textContent += `${guessedLetter} `;
   document.getElementById('wrongSound').play();
-
+document.getElementById('hangmanImg').src = ` /Imgs/healthbar(${wrongGuesses}).png`;
   if (wrongGuesses === maxMistakes) {
     endGame(false);
   }
@@ -182,5 +185,33 @@ function restartGame() {
   displayedWord = '';
   wrongGuesses = 0;
   guessedLetters = [];
-  document.getElementById('shamrock').src = 'img/image6.jpg'; 
+  document.getElementById('hangmanImg').src = ` /Imgs/healthbar.png`;
+
+}
+document.getElementById('letterInput').addEventListener('keydown', function(event) {
+  if (event.key === "Enter") {
+      guessLetter();
+  }
+});
+function startGameAlt(level) {
+  //reset game
+  wrongGuesses = 0
+  guessedLetters = []
+
+  selectedWord = prompt('Enter your own word')
+  displayedWord = '_'.repeat(selectedWord.length)
+
+  updateDifficultyDisplay(level)
+  updateUI()
+  
+  //Show Game Area/Difficulty Display , hide selection buttons
+  document.getElementById('gameArea').classList.remove('d-none')
+  document.getElementById('gameArea').classList.add('d-block')
+
+  document.getElementById('difficultyBox').classList.remove('d-none')
+  document.getElementById('difficultyBox').classList.add('d-block')
+
+  document.getElementById('difficultySelection').classList.add('d-none')
+  //Auto-focus on input
+  document.getElementById('letterInput').focus()
 }
