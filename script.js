@@ -166,7 +166,7 @@ function updateWrongGuess(guessedLetter) {
   wrongGuesses++;
   document.getElementById('wrongLetters').textContent += `${guessedLetter} `;
   document.getElementById('wrongSound').play();
-document.getElementById('hangmanImg').src = ` /Imgs/healthbar(${wrongGuesses}).png`;
+document.getElementById('hangmanImg').src = `healthbar(${wrongGuesses}).png`;
   if (wrongGuesses === maxMistakes) {
     endGame(false);
   }
@@ -185,7 +185,7 @@ function restartGame() {
   displayedWord = '';
   wrongGuesses = 0;
   guessedLetters = [];
-  document.getElementById('hangmanImg').src = ` /Imgs/healthbar.png`;
+  document.getElementById('hangmanImg').src = `healthbar.png`;
 
 }
 document.getElementById('letterInput').addEventListener('keydown', function(event) {
